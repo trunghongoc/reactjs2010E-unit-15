@@ -85,10 +85,9 @@ const deepMenu = [
   },
 ];
 
-const renderDeepMenu = array => {
-  const menu = document.getElementById('deep-menu')
-
+const renderDeepMenu = (parent, array) => {
   const ulParent = document.createElement('ul')
+
   array.forEach(item => {
     const li = document.createElement('li')
 
@@ -106,12 +105,18 @@ const renderDeepMenu = array => {
     li.appendChild(span)
 
     if (Array.isArray(item.children)) {
+      renderDeepMenu(li, item.children)
     }
 
     ulParent.appendChild(li)
   })
 
-  menu.appendChild(ulParent)
+  parent.appendChild(ulParent)
 }
 
-renderDeepMenu(deepMenu)
+const render = () => {
+  const menu = document.getElementById('deep-menu')
+  renderDeepMenu(menu, deepMenu)
+}
+
+render()
